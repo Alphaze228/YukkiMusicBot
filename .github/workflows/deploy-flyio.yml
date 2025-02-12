@@ -3,7 +3,11 @@ name: Deploy to Fly.io
 on:
   push:
     branches:
-      - main  # Sesuaikan dengan branch utama repo-mu
+      - main  # Trigger saat ada push ke branch 'main'
+  pull_request:
+    branches:
+      - main  # Trigger saat ada pull request ke 'main'
+  workflow_dispatch:  # Memungkinkan menjalankan workflow secara manual
 
 jobs:
   deploy:
@@ -20,8 +24,8 @@ jobs:
           flyctl version
 
       - name: Deploy to Fly.io
-        run: |
-          flyctl auth docker
-          flyctl deploy --remote-only
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}  # Pastikan sudah menambahkan secret di GitHub
+        run: |
+          flyctl auth login --access-token "$FLY_API_TOKEN"
+          flyctl deploy
