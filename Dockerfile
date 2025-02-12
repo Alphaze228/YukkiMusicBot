@@ -1,9 +1,19 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs18
-RUN apt-get update -y && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends ffmpeg \
-    && apt-get clean \
+# Gunakan image Python 3.9 sebagai base
+FROM python:3.9
+
+# Set direktori kerja di dalam container
+WORKDIR /app
+
+# Install dependensi sistem yang diperlukan
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
-COPY . /app/
-WORKDIR /app/
-RUN pip3 install --no-cache-dir --upgrade --requirement requirements.txt
-CMD bash start
+
+# Salin semua file proyek ke dalam container
+COPY . .
+
+# Install semua dependensi Python
+RUN pip install --no-cache-dir -U -r requirements.txt
+
+# Jalankan bot saat container dimulai
+CMD ["python3", "YukkiMusicBot/__main__.py"]
