@@ -1,10 +1,6 @@
+.git
+__pycache__
+*.pyc
+*.pyo
+*.pyd
 .env
-.cache
-Yukkilogs.txt
-.DS_Store
-*.session
-raw_files/
-cache/
-downloads/
-__pycache__/
-*.session-journal
