@@ -1,0 +1,12 @@
+name: yukki-music-bot
+image: python:3.9
+command:
+  - bash
+  - -c
+  - "pip install -U -r requirements.txt && python3 -m YukkiMusicBot"
+volumes:
+  - /root/.cache
+sync:
+  - .:/app
+forward:
+  - 8080:8080
